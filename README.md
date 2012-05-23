@@ -1,4 +1,4 @@
-# HasAuditTrail
+# HasAuditTrail [![Build Status](https://secure.travis-ci.org/andersonfreitas/has_audit_trail.png)](http://travis-ci.org/andersonfreitas/has_audit_trail)
 
 TODO: Write a gem description
 
@@ -18,7 +18,17 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+```ruby
+class User < ActiveRecord::Base
+  has_audit_trail
+end
+```
+
+```ruby
+class User < ActiveRecord::Base
+  has_audit_trail :only => [ :name, :email ]
+end
+```
 
 ## Contributing
 
