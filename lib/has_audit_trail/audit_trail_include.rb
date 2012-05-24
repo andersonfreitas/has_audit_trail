@@ -22,7 +22,7 @@ module HasAuditTrail
 
         self.audited_associations = opts[:audit_nested] if opts[:audit_nested]
 
-        # Descobrindo quais são as associations automaticamente
+        # Discovering which attributes are associations...
         self.audited_collections = []
         self.audited_columns.each do |attr|
           if self.respond_to? "after_add_for_#{attr}"
@@ -40,7 +40,7 @@ module HasAuditTrail
         end
 
         after_create :audit_create
-        before_save :audit_save # before_update?
+        before_update :audit_update
         before_destroy :audit_destroy
 
         include HasAuditTrail::AuditTrailInclude::InstanceMethods
