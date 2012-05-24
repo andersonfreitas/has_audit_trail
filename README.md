@@ -1,6 +1,8 @@
 # HasAuditTrail [![Build Status](https://secure.travis-ci.org/andersonfreitas/has_audit_trail.png)](http://travis-ci.org/andersonfreitas/has_audit_trail)
 
-TODO: Write a gem description
+## Disclaimer
+
+This is **VERY** experimental, please wait until the release 0.1.0 before using it in production!
 
 ## Installation
 
@@ -27,6 +29,29 @@ end
 ```ruby
 class User < ActiveRecord::Base
   has_audit_trail :only => [ :name, :email ]
+end
+```
+
+```ruby
+class User < ActiveRecord::Base
+  has_audit_trail :only => [ :name, :email, :projects => { :audit => Proc.new { |p| p.name } } ]
+end
+```
+
+```ruby
+class Project < ActiveRecord::Base
+  has_many :tasks
+  
+  accepts_nested_attributes_for :tasks
+
+  has_audit_trail(
+    :audit_nested => {
+      :tasks => {
+        :label => Proc.new { |task| task.name },
+        :value_print => Proc.new { |value| value }
+      }
+    }
+  )
 end
 ```
 
