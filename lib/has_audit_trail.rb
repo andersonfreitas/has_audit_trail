@@ -1,7 +1,7 @@
-require "has_audit_trail/version"
 require 'active_record'
-
-require_dependency 'has_audit_trail/audit_trail_include'
+require 'has_audit_trail/version'
+require 'has_audit_trail/audit_trail'
+require 'has_audit_trail/audit_trail_include'
 
 ActiveRecord::Base.send :include, HasAuditTrail::AuditTrailInclude
 

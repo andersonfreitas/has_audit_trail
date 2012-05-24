@@ -48,23 +48,23 @@ module HasAuditTrail
     end
     module InstanceMethods
       def write_audit(attrs)
-        attrs.merge!(object: self.class.model_name, object_id: self.id)
+        attrs.merge!(:object => self.class.model_name, :object_id => self.id)
         AuditTrail.create!(attrs)
       end
 
       def audit_create
-        write_audit(action: :create)
+        write_audit(:action => :create)
       end
 
       def audit_destroy
-        write_audit(action: :destroy)
+        write_audit(:action => :destroy)
       end
 
-      def audit_save
+      def audit_update
         if changed?
           changes.each do |field, change|
             if self.audited_columns.include? field.to_sym
-              write_audit(action: :update, old_value: change[0].to_yaml, new_value: change[1].to_yaml, property: field)
+              write_audit(:action => :update, :old_value => change[0].to_yaml, :new_value => change[1].to_yaml, :property => field)
             end
           end
         end
@@ -75,13 +75,13 @@ module HasAuditTrail
             if changed_collections[attr][:added].size > 0
               old = self.send(attr) - changed_collections[attr][:added]
 
-              write_audit(action: :update, old_value: old.collect { |x| x.name }, new_value: self.send(attr).collect {|x|x.name}, property: attr)
+              write_audit(:action => :update, :old_value => old.collect { |x| x.name }, :new_value => self.send(attr).collect {|x|x.name}, :property => attr)
               changed_collections[attr][:added] = []
             end
             if changed_collections[attr][:removed].size > 0
               old = self.send(attr) + changed_collections[attr][:removed]
 
-              write_audit(action: :update, old_value: old.collect { |x| x.name }, new_value: self.send(attr).collect {|x|x.name}, property: attr)
+              write_audit(:action => :update, :old_value => old.collect { |x| x.name }, :new_value => self.send(attr).collect {|x|x.name}, :property => attr)
               changed_collections[attr][:removed] = []
             end
           end
@@ -94,7 +94,7 @@ module HasAuditTrail
               if c.changed?
                 c.changes.each do |field, change|
                   if change[0].to_s != change[1].to_s
-                    write_audit(action: :update, old_value: change[0].to_yaml, new_value: change[1].to_yaml, property: procs[:label].call(c))
+                    write_audit(:action => :update, :old_value => change[0].to_yaml, :new_value => change[1].to_yaml, :property => procs[:label].call(c))
                   end
                 end
               end

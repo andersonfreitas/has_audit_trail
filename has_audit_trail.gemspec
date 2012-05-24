@@ -15,7 +15,6 @@ Gem::Specification.new do |gem|
   gem.require_paths = ["lib"]
   gem.version       = HasAuditTrail::VERSION
 
- 
   gem.add_development_dependency 'activerecord', '~> 3.0'
   gem.add_development_dependency 'rails', '~> 3.0'
   gem.add_development_dependency 'rspec-rails', '~> 2.0'
