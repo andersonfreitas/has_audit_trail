@@ -18,6 +18,10 @@ Or install it yourself as:
 
     $ gem install has_audit_trail
 
+Create the migrations:
+
+    $ rails generate has_audit_trail:install
+
 ## Usage
 
 ```ruby
