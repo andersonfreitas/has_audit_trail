@@ -54,7 +54,9 @@ module HasAuditTrail
       end
 
       def audit_create
-        write_audit(:action => :create)
+        self.audited_columns.each do |field|
+          write_audit(:action => :create, :new_value => self.send(field.to_sym).to_yaml, :property => field.to_sym)
+        end
       end
 
       def audit_destroy
