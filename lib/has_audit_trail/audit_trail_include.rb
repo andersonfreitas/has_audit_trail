@@ -19,6 +19,7 @@ module HasAuditTrail
 
         self.audited_columns = opts[:only] || self.attribute_names.collect { |str| str.to_sym }
         self.audited_columns -= opts[:except] if opts[:except]
+        self.audited_columns -= [:id, :created_at, :updated_at]
 
         self.audited_associations = opts[:audit_nested] if opts[:audit_nested]
 
