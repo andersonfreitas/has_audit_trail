@@ -17,7 +17,7 @@ module HasAuditTrail
         class_attribute :audited_collections, :instance_writer => false
         class_attribute :changed_collections, :instance_writer => false
 
-        self.audited_columns = opts[:only] || self.attribute_names.collect { |str| str.to_sym }
+        self.audited_columns = opts[:only] || self.column_names.collect { |str| str.to_sym }
         self.audited_columns -= opts[:except] if opts[:except]
         self.audited_columns -= [:id, :created_at, :updated_at]
 
