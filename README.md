@@ -18,7 +18,7 @@ Or install it yourself as:
 
     $ gem install has_audit_trail
 
-Create the migrations:
+Create the migration:
 
     $ rails generate has_audit_trail:install
 
@@ -45,7 +45,7 @@ end
 ```ruby
 class Project < ActiveRecord::Base
   has_many :tasks
-  
+
   accepts_nested_attributes_for :tasks
 
   has_audit_trail(
@@ -58,6 +58,11 @@ class Project < ActiveRecord::Base
   )
 end
 ```
+
+## TODO
+
+* Test suite using Test::Unit or rspec
+
 
 ## Contributing
 
