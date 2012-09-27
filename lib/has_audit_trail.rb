@@ -14,7 +14,7 @@ if defined?(ActionController) and defined?(ActionController::Base)
   require 'has_audit_trail/audit_trail_sweeper'
 
   ActionController::Base.class_eval do
-    cache_sweeper :audit_trail_sweeper
+    cache_sweeper :audit_trail_sweeper unless defined?(Rails) and Rails.env.test?
   end
 end
 
